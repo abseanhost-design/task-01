@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>My Team</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --blue: #3b82f6;
+            --green: #10b981;
+            --shadow: 0 16px 40px rgba(15, 23, 42, .1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+
+        .app-frame {
+            width: min(100%, 420px);
+            background: var(--bg);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        .top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .back-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #e5e7eb;
+            display: grid;
+            place-items: center;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+
+        .page-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: 0 16px 30px rgba(15, 23, 42, .08);
+            margin-bottom: 16px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, .12);
+        }
+
+        .team-card .label {
+            font-size: .8rem;
+            text-transform: uppercase;
+            color: var(--muted);
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .team-card .value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .stat-box {
+            background: #f8fbff;
+            border-radius: 20px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .stat-title {
+            font-size: .75rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .members-card {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 16px 30px rgba(15, 23, 42, .08);
+            margin-bottom: 16px;
+        }
+
+        .members-card h2 {
+            margin: 0 0 16px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .member-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 12px;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 14px;
+        }
+
+        .member-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #dbeafe;
+            display: grid;
+            place-items: center;
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .member-name {
+            margin: 0;
+            font-size: .95rem;
+            font-weight: 600;
+        }
+
+        .member-role {
+            margin: 2px 0 0;
+            font-size: .78rem;
+            color: var(--muted);
+        }
+
+        .member-metric {
+            text-align: right;
+        }
+
+        .member-score {
+            margin: 0;
+            font-size: .95rem;
+            font-weight: 700;
+        }
+
+        .member-small {
+            margin: 2px 0 0;
+            font-size: .75rem;
+            color: var(--muted);
+        }
+
+        .invite-banner {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            color: white;
+            border-radius: 24px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: 0 18px 40px rgba(59, 130, 246, .2);
+        }
+
+        .invite-banner p {
+            margin: 0;
+            font-size: .95rem;
+            font-weight: 600;
+        }
+
+        .invite-cta {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .25);
+            display: grid;
+            place-items: center;
+            font-size: 1.2rem;
+        }
+
+        .note {
+            margin-top: 18px;
+            font-size: .82rem;
+            color: var(--muted);
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="app-frame">
+        <div class="top-row">
+            <a href="index.html" class="back-button" aria-label="Back to dashboard">←</a>
+            <div class="page-title">My Team</div>
+            <div style="width:40px"></div>
+        </div>
+
+        <h1>My Team</h1>
+
+        <section class="team-card">
+            <div class="label">Team ID</div>
+            <div class="value" id="team-id-value">70003</div>
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-title">Members</div>
+                    <div class="stat-value" id="team-member-count">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">Tasks Completed</div>
+                    <div class="stat-value" id="team-completed-tasks">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">Revenue</div>
+                    <div class="stat-value" id="team-total-revenue">0.0 NGN</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="members-card">
+            <h2>Team members</h2>
+            <ul class="member-list" id="member-list"></ul>
+        </section>
+
+        <section class="invite-banner">
+            <p>Bring your team together and grow faster.</p>
+            <div class="invite-cta">+</div>
+        </section>
+
+    </main>
+
+    <script>
+        // Check if user is logged in
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            window.location.href = '/signup';
+        }
+
+        const TEAM_CODE = '70003';
+        const memberList = document.getElementById('member-list');
+        const memberCount = document.getElementById('team-member-count');
+        const completedTasksLabel = document.getElementById('team-completed-tasks');
+        const totalRevenueLabel = document.getElementById('team-total-revenue');
+        const teamIdValue = document.getElementById('team-id-value');
+
+        function getAuthHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+        }
+
+        function initials(name) {
+            return name
+                .split(' ')
+                .filter(Boolean)
+                .map((word) => word[0].toUpperCase())
+                .slice(0, 2)
+                .join('');
+        }
+
+        async function fetchAndRenderTeam() {
+            try {
+                const response = await fetch(`/api/team/${TEAM_CODE}`, {
+                    headers: getAuthHeaders()
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch team data');
+                }
+
+                const data = await response.json();
+                const team = data.team;
+                const members = data.members;
+                const stats = data.stats;
+
+                teamIdValue.textContent = team.teamId;
+                memberCount.textContent = stats.memberCount;
+                completedTasksLabel.textContent = stats.totalTasksCompleted;
+                totalRevenueLabel.textContent = `${stats.estimatedRevenue.toFixed(1)} NGN`;
+
+                if (!members.length) {
+                    memberList.innerHTML = `
+                        <li class="member-item">
+                            <div class="member-info">
+                                <div class="avatar">?</div>
+                                <div>
+                                    <p class="member-name">No registered members yet</p>
+                                    <p class="member-role">Use team code ${TEAM_CODE} to join</p>
+                                </div>
+                            </div>
+                            <div class="member-metric">
+                                <p class="member-score">0</p>
+                                <p class="member-small">Points</p>
+                            </div>
+                        </li>`;
+                    return;
+                }
+
+                memberList.innerHTML = members
+                    .map((member) => `
+                        <li class="member-item">
+                            <div class="member-info">
+                                <div class="avatar">${initials(member.name || member.phone)}</div>
+                                <div>
+                                    <p class="member-name">${member.name || member.phone}</p>
+                                    <p class="member-role">Team Member</p>
+                                    <p class="member-id" style="font-size: 0.75rem; color: var(--muted); margin: 2px 0 0;">ID: ${member.userId || 'N/A'}</p>
+                                </div>
+                            </div>
+                            <div class="member-metric">
+                                <p class="member-score">${member.points || 0}</p>
+                                <p class="member-small">Points</p>
+                            </div>
+                        </li>`)
+                    .join('');
+            } catch (error) {
+                console.error('Error fetching team data:', error);
+                alert('Unable to load team data. Redirecting to dashboard.');
+                window.location.href = '/';
+            }
+        }
+
+        // Initialize
+        fetchAndRenderTeam();
+    </script>
+</body>
+
+</html>

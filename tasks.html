@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TASK-01 Task</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f6f8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .card {
+            background: #eaecef;
+            border-radius: 20px;
+            padding: 25px 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        .icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            background: #fff;
+        }
+
+        .icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .text {
+            font-size: 16px;
+            color: #ff5c5c;
+            font-weight: 500;
+        }
+
+        .price {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+
+        .task-action {
+            margin-top: 16px;
+            width: 100%;
+            border: none;
+            border-radius: 14px;
+            padding: 14px 0;
+            background: #3b82f6;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .task-action:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .summary {
+            background: white;
+            border-radius: 20px;
+            padding: 18px 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 16px 30px rgba(15, 23, 42, .08);
+        }
+
+        .summary p {
+            margin: 0 0 8px;
+            font-size: 14px;
+            color: #334155;
+        }
+
+        .summary p strong {
+            color: #111827;
+        }
+
+        .badge {
+            font-size: 10px;
+            background: red;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        /* WhatsApp Modal Styles */
+        .whatsapp-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .whatsapp-modal.show {
+            display: flex;
+        }
+
+        .whatsapp-modal-content {
+            width: 340px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-top {
+            background: linear-gradient(180deg, #4a6cf7, #a9b9f7);
+            padding: 20px;
+            color: #000;
+        }
+
+        .modal-top h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .modal-top p {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .modal-body {
+            padding: 18px;
+        }
+
+        .modal-body .label {
+            margin: 12px 0 6px;
+            font-weight: 500;
+        }
+
+        .input-box {
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+        }
+
+        .input-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .flag {
+            width: 28px;
+            margin-right: 10px;
+        }
+
+        .clear {
+            color: #000;
+            cursor: pointer;
+        }
+
+        .info {
+            background: #dbeafe;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .info span {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        .whatsapp-btn {
+            width: 100%;
+            margin-top: 18px;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: #9ca3af;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .whatsapp-btn.active {
+            background: #4a6cf7;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>TASK-01 Task</h1>
+
+        <div class="summary">
+            <p><strong id="user-name">Team member</strong></p>
+            <p>Your points: <span id="user-points">0</span></p>
+            <p>Tasks completed: <span id="user-completed">0</span></p>
+        </div>
+
+        <div class="grid">
+
+            <!-- WhatsApp Card -->
+            <div class="card">
+                <div class="icon">
+                    <img src="https://img.icons8.com/color/96/whatsapp.png">
+                </div>
+                <div class="text">
+                    <span class="badge">HOT</span>
+                    <span class="price">800/Task 💰</span>
+                </div>
+                <button class="task-action" data-reward="80">Complete task</button>
+            </div>
+
+            <!-- YouTube -->
+            <div class="card">
+                <div class="icon">
+                    <img src="https://img.icons8.com/color/96/youtube-play.png">
+                </div>
+                <div class="text">Not online</div>
+                <button class="task-action" data-reward="35">Complete task</button>
+            </div>
+
+            <!-- Facebook -->
+            <div class="card">
+                <div class="icon">
+                    <img src="https://img.icons8.com/color/96/facebook.png">
+                </div>
+                <div class="text">Not online</div>
+                <button class="task-action" data-reward="30">Complete task</button>
+            </div>
+
+            <!-- Line -->
+            <div class="card">
+                <div class="icon">
+                    <img src="https://img.icons8.com/color/96/line-me.png">
+                </div>
+                <div class="text">Not online</div>
+                <button class="task-action" data-reward="25">Complete task</button>
+            </div>
+
+            <!-- X (Twitter) -->
+            <div class="card">
+                <div class="icon">
+                    <img src="https://img.icons8.com/ios-filled/100/000000/x.png">
+                </div>
+                <div class="text">Not online</div>
+                <button class="task-action" data-reward="40">Complete task</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div class="whatsapp-modal" id="whatsapp-modal">
+        <div class="whatsapp-modal-content">
+            <div class="modal-top">
+                <h2>Enter your WhatsApp</h2>
+                <p>We'll send task notifications and links to this number</p>
+            </div>
+            <div class="modal-body">
+                <div class="label">Country or region</div>
+                <div class="input-box">
+                    <div style="display:flex;align-items:center;">
+                        <img src="https://flagcdn.com/w40/ng.png" class="flag" alt="Nigeria flag">
+                        <span>+234</span>
+                    </div>
+                </div>
+                <div class="label">WhatsApp number</div>
+                <div class="input-box">
+                    <input type="text" id="whatsapp-number" placeholder="Enter your WhatsApp number">
+                    <i class="fa fa-circle-xmark clear" id="clear-number"></i>
+                </div>
+                <div class="info">
+                    <div>
+                        💡 <span>First time using? Tap to watch tutorial</span>
+                    </div>
+                    <i class="fa fa-play-circle"></i>
+                </div>
+                <button class="whatsapp-btn" id="start-task-btn">Start task</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            window.location.href = '/signup';
+        }
+
+        const summaryName = document.getElementById('user-name');
+        const summaryPoints = document.getElementById('user-points');
+        const summaryCompleted = document.getElementById('user-completed');
+        const taskButtons = document.querySelectorAll('.task-action');
+        const whatsappModal = document.getElementById('whatsapp-modal');
+        const whatsappNumberInput = document.getElementById('whatsapp-number');
+        const clearNumberBtn = document.getElementById('clear-number');
+        const startTaskBtn = document.getElementById('start-task-btn');
+
+        let currentUser = null;
+
+        function getAuthHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+        }
+
+        function updateSummary(user) {
+            if (user) {
+                summaryName.textContent = user.name || 'Team member';
+                summaryPoints.textContent = user.points || 0;
+                summaryCompleted.textContent = user.completedTasks || 0;
+            } else {
+                summaryName.textContent = 'Not signed in';
+                summaryPoints.textContent = '0';
+                summaryCompleted.textContent = '0';
+            }
+        }
+
+        async function fetchUserData() {
+            try {
+                const response = await fetch('/api/user', {
+                    headers: getAuthHeaders()
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+                const data = await response.json();
+                currentUser = data.user;
+                updateSummary(currentUser);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                alert('Unable to load user data. Redirecting to login.');
+                window.location.href = '/login';
+            }
+        }
+
+        async function completeTask(taskId) {
+            if (!currentUser) {
+                alert('Please sign in to complete tasks.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/tasks/complete', {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ taskId })
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    alert(data.message || 'Failed to complete task.');
+                    return;
+                }
+
+                currentUser = data.user;
+                updateSummary(currentUser);
+                const task = data.task;
+                alert(`Task completed! ${task.reward} points awarded. New balance: ₦${currentUser.balance.toFixed(2)}`);
+            } catch (error) {
+                console.error('Error completing task:', error);
+                alert('Unable to complete task. Please try again.');
+            }
+        }
+
+        function openWhatsAppModal() {
+            whatsappModal.classList.add('show');
+            whatsappNumberInput.focus();
+        }
+
+        function closeWhatsAppModal() {
+            whatsappModal.classList.remove('show');
+            whatsappNumberInput.value = '';
+        }
+
+        function validatePhoneNumber(phone) {
+            const cleaned = phone.replace(/[^\d+]/g, '');
+            const nigeriaRegex = /^\+?234\d{10,15}$/;
+            return nigeriaRegex.test(cleaned);
+        }
+
+        // Initialize page
+        fetchUserData();
+
+        taskButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const taskId = button.dataset.taskId || button.dataset.reward;
+                const isWhatsApp = button.closest('.card').querySelector('img[src*="whatsapp"]');
+                if (isWhatsApp) {
+                    openWhatsAppModal();
+                } else {
+                    completeTask(taskId);
+                }
+            });
+        });
+
+        // Modal event listeners
+        clearNumberBtn.addEventListener('click', () => {
+            whatsappNumberInput.value = '';
+            whatsappNumberInput.focus();
+        });
+
+        whatsappNumberInput.addEventListener('input', (e) => {
+            const value = e.target.value;
+            if (validatePhoneNumber(value)) {
+                startTaskBtn.classList.add('active');
+            } else {
+                startTaskBtn.classList.remove('active');
+            }
+        });
+
+        startTaskBtn.addEventListener('click', () => {
+            const phoneNumber = whatsappNumberInput.value.trim();
+            if (!validatePhoneNumber(phoneNumber)) {
+                alert('Please enter a valid Nigerian phone number (e.g., 08012345678 or +2348012345678)');
+                return;
+            }
+            closeWhatsAppModal();
+            completeTask('whatsapp');
+        });
+
+        // Close modal when clicking outside
+        whatsappModal.addEventListener('click', (e) => {
+            if (e.target === whatsappModal) {
+                closeWhatsAppModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

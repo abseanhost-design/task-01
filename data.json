@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "balance": 1442.8,
+    "bankLinked": false,
+    "history": []
+  },
+  "users": [
+    {
+      "userId": "T01-2DA2DC39",
+      "phone": "07036921695",
+      "name": "ABRAHAM",
+      "teamId": "70003",
+      "passwordHash": "scrypt:32768:8:1$LKZgJ4hXFaqVhODs$563a0a9a4734514da78d0940bfe5529a82d586a83c5d3fc2a1dcbc4a8dcc093e11aed634606e121e5bbb578d71269d7af29b043adefbc599efd2e23046ed162b",
+      "token": "7af8acf429004a359e7f921756eecb24",
+      "referralCode": "REF-0EB0C2",
+      "referredBy": null,
+      "points": 0,
+      "completedTasks": 0,
+      "balance": 650.0,
+      "taskHistory": []
+    }
+  ],
+  "teams": [
+    {
+      "teamId": "70003",
+      "name": "Starter Team",
+      "description": "Default starter team for new users"
+    }
+  ],
+  "tasks": [
+    {
+      "taskId": "whatsapp",
+      "name": "WhatsApp task",
+      "reward": 80,
+      "description": "Share the update over WhatsApp"
+    },
+    {
+      "taskId": "youtube",
+      "name": "YouTube task",
+      "reward": 35,
+      "description": "Watch a short tutorial video"
+    },
+    {
+      "taskId": "facebook",
+      "name": "Facebook task",
+      "reward": 30,
+      "description": "Post project progress on Facebook"
+    },
+    {
+      "taskId": "line",
+      "name": "Line task",
+      "reward": 25,
+      "description": "Share the task link on Line"
+    },
+    {
+      "taskId": "x",
+      "name": "X task",
+      "reward": 40,
+      "description": "Share the task update on X"
+    }
+  ],
+  "withdrawals": []
+}

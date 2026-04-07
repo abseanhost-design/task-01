@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>TASK-01 Sign Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --surface: #FFFFFF;
+            --surface-soft: #F7F8FD;
+            --text: #12233B;
+            --muted: #66718A;
+            --primary: #4A6CF7;
+            --primary-strong: #3B5BDB;
+            --border: #E5E9F2;
+            --shadow: 0 28px 80px rgba(18, 35, 83, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.18), transparent 32%),
+                linear-gradient(180deg, #3F61F7 0%, #5567FF 42%, #AAB4FF 100%);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .page {
+            width: min(100%, 420px);
+        }
+
+        .page-header {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 26px;
+        }
+
+        .brand-mark {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(14px);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.26);
+        }
+
+        .brand-mark svg {
+            width: 28px;
+            height: 28px;
+            fill: #FFFFFF;
+        }
+
+        .headline {
+            margin: 0;
+            font-size: 28px;
+            line-height: 1.05;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .subheadline {
+            margin: 10px 0 0;
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.88);
+            max-width: 280px;
+        }
+
+        .auth-card {
+            background: var(--surface);
+            border-radius: 32px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 28px 24px 18px;
+            background: linear-gradient(180deg, rgba(74, 108, 247, 0.12), transparent 80%);
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .card-copy {
+            margin: 10px 0 0;
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 320px;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 16px;
+        }
+
+        .field {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--surface-soft);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .field:focus-within {
+            border-color: rgba(74, 108, 247, 0.4);
+            box-shadow: 0 0 0 6px rgba(74, 108, 247, 0.08);
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+
+        .field input {
+            border: 0;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 15px;
+            color: var(--text);
+        }
+
+        .field input::placeholder {
+            color: #9EA4B7;
+        }
+
+        .toggle-visibility {
+            border: 0;
+            background: rgba(74, 108, 247, 0.08);
+            color: var(--primary);
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .toggle-visibility:hover {
+            background: rgba(74, 108, 247, 0.16);
+        }
+
+        .action-btn {
+            width: 100%;
+            border: 0;
+            border-radius: 18px;
+            padding: 16px;
+            font-size: 15px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+            box-shadow: 0 18px 30px rgba(59, 91, 219, 0.18);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 20px 40px rgba(59, 91, 219, 0.22);
+        }
+
+        .helper-text {
+            margin: 22px 0 0;
+            font-size: 14px;
+            color: var(--muted);
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        .helper-text a {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .note {
+            margin: 12px 0 0;
+            text-align: center;
+            font-size: 13px;
+            color: #A2A7BD;
+        }
+
+        @media (max-width: 380px) {
+            body {
+                padding: 16px;
+            }
+
+            .page-header {
+                gap: 12px;
+            }
+
+            .headline {
+                font-size: 26px;
+            }
+
+            .auth-card {
+                border-radius: 24px;
+            }
+
+            .card-header,
+            .card-body {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .field {
+                padding: 14px;
+            }
+
+            .action-btn {
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header class="page-header">
+            <div class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2.5L4.5 7v10L12 21.5l7.5-4.5V7L12 2.5zm0 1.64l5.78 3.47L12 11.98 6.22 7.61 12 4.14zM5.5 8.58 12 12.98l6.5-4.4v7.17L12 19.86 5.5 15.75V8.58z" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="headline">Secure signup</h1>
+                <p class="subheadline">Create your TASK-01 account quickly and safely with a sleek mobile-first
+                    experience.</p>
+            </div>
+        </header>
+
+        <article class="auth-card" aria-label="Sign up panel">
+            <div class="card-header">
+                <h2 class="card-title">Create account</h2>
+                <p class="card-copy">Use your phone number and a strong password to join TASK-01 and start earning
+                    rewards.</p>
+            </div>
+            <div class="card-body">
+                <form id="signup-form" novalidate>
+                    <div class="form-group">
+                        <label class="field">
+                            <span class="icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                            <input id="signup-phone" type="tel" placeholder="Phone number" autocomplete="tel"
+                                aria-label="Phone number" inputmode="numeric" pattern="[0-9]*" required />
+                        </label>
+                        <label class="field">
+                            <span class="icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17 11V8a5 5 0 0 0-10 0v3" stroke="currentColor" stroke-width="1.8"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <rect x="6" y="11" width="12" height="9" rx="3" stroke="currentColor"
+                                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12 15v2" stroke="currentColor" stroke-width="1.8"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </span>
+                            <input id="signup-name" type="text" placeholder="Full name" autocomplete="name"
+                                aria-label="Full name" required />
+                        </label>
+                        <label class="field">
+                            <span class="icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 7h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                                    <path d="M5 11h14" stroke="currentColor" stroke-width="1.8"
+                                        stroke-linecap="round" />
+                                    <path d="M7 15h10" stroke="currentColor" stroke-width="1.8"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </span>
+                            <input id="signup-team-code" type="text" placeholder="Team code (70003)" autocomplete="off"
+                                aria-label="Team code" required />
+                        </label>
+                        <label class="field">
+                            <span class="icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17 11V8a5 5 0 0 0-10 0v3" stroke="currentColor" stroke-width="1.8"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <rect x="6" y="11" width="12" height="9" rx="3" stroke="currentColor"
+                                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12 15v2" stroke="currentColor" stroke-width="1.8"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </span>
+                            <input id="signup-password" type="password" placeholder="Create password"
+                                autocomplete="new-password" aria-label="Password" required />
+                            <button type="button" class="toggle-visibility" data-target="signup-password">Show</button>
+                        </label>
+                        <label class="field">
+                            <span class="icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17 11V8a5 5 0 0 0-10 0v3" stroke="currentColor" stroke-width="1.8"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <rect x="6" y="11" width="12" height="9" rx="3" stroke="currentColor"
+                                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12 15v2" stroke="currentColor" stroke-width="1.8"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </span>
+                            <input id="signup-confirm" type="password" placeholder="Confirm password"
+                                autocomplete="new-password" aria-label="Confirm password" required />
+                            <button type="button" class="toggle-visibility" data-target="signup-confirm">Show</button>
+                        </label>
+                    </div>
+                    <button type="submit" class="action-btn">Create account</button>
+                </form>
+                <p class="helper-text">Already have an account? <a href="login.html">Log in</a></p>
+                <p class="note">Passwords must match to complete registration.</p>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        const signupForm = document.getElementById('signup-form');
+        const signupPhone = document.getElementById('signup-phone');
+        const signupName = document.getElementById('signup-name');
+        const signupTeamCode = document.getElementById('signup-team-code');
+        const signupPassword = document.getElementById('signup-password');
+        const signupConfirm = document.getElementById('signup-confirm');
+        const TEAM_CODE = '70003';
+
+        function validatePhone(value) {
+            return /^\d{10,15}$/.test(value);
+        }
+
+        function setSession(user, token) {
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('currentUserPhone', user.phone);
+            localStorage.setItem('currentUserName', user.name);
+            localStorage.setItem('currentUserTeamId', user.teamId);
+            localStorage.setItem('currentUserId', user.userId);
+            localStorage.setItem('currentUserReferral', user.referralCode || '');
+        }
+
+        signupPhone.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+
+        signupForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const phone = signupPhone.value.trim();
+            const name = signupName.value.trim();
+            const teamCode = signupTeamCode.value.trim();
+            const password = signupPassword.value.trim();
+            const confirm = signupConfirm.value.trim();
+
+            if (!phone || !validatePhone(phone)) {
+                alert('Please enter a valid phone number.');
+                return;
+            }
+            if (!name) {
+                alert('Please enter your name.');
+                return;
+            }
+            if (teamCode !== TEAM_CODE) {
+                alert(`Please enter the correct team code: ${TEAM_CODE}`);
+                return;
+            }
+            if (!password) {
+                alert('Please enter your password.');
+                return;
+            }
+            if (password !== confirm) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const referralCode = urlParams.get('ref') || '';
+
+            try {
+                const response = await fetch('/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phone,
+                        name,
+                        password,
+                        teamId: teamCode,
+                        referralCode
+                    })
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    alert(data.message || 'Signup failed. Please try again.');
+                    return;
+                }
+
+                setSession(data.user, data.token);
+                alert('Sign up successful! Redirecting to your dashboard.');
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Signup error', error);
+                alert('Unable to sign up right now. Please try again later.');
+            }
+        });
+
+        document.querySelectorAll('.toggle-visibility').forEach(button => {
+            button.addEventListener('click', () => {
+                const target = document.getElementById(button.dataset.target);
+                if (!target) return;
+                const visible = target.type === 'password';
+                target.type = visible ? 'text' : 'password';
+                button.textContent = visible ? 'Hide' : 'Show';
+            });
+        });
+    </script>
+</body>
+
+</html>

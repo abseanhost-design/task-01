@@ -1,0 +1,1734 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>TASK-01 Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #F5F6F8;
+            --card: #ffffff;
+            --text: #1F2D3D;
+            --muted: #65778D;
+            --blue: #4A90E2;
+            --light-blue: #8EC4FF;
+            --orange: #FFA726;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+
+        .app-frame {
+            width: min(100%, 400px);
+            background: var(--bg);
+            border-radius: 28px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+            padding: 16px 16px 20px;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .top-row .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .top-row .ID {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--muted);
+            line-height: 1.25;
+        }
+
+        .top-row .ID .id-container {
+            text-align: right;
+        }
+
+        .top-row .ID small {
+            display: block;
+            font-size: .82rem;
+        }
+
+        .top-row .settings {
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .top-row .settings:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 18px;
+            margin-bottom: 16px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, var(--blue), var(--light-blue));
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(9, 57, 107, .28);
+            padding: 20px;
+        }
+
+        .balance-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .balance-top .icon {
+            font-size: 1.4rem;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .balance-top .label {
+            font-size: .88rem;
+            color: rgba(255, 255, 255, .9);
+        }
+
+        .balance-value {
+            font-size: 2rem;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .withdraw-btn {
+            background: var(--orange);
+            color: #fff;
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 8px 18px rgba(255, 165, 38, .35);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .withdraw-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(255, 165, 38, .5);
+        }
+
+        .bank-status {
+            background: #EDEDED;
+            border-radius: 16px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .bank-status-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bank-status-left .icon {
+            font-size: 1rem;
+        }
+
+        .bank-status-text {
+            font-size: .9rem;
+            color: #2f3f55;
+            font-weight: 600;
+        }
+
+        .info-arrow {
+            font-size: 1rem;
+            color: #65778d;
+        }
+
+        .rounded-block {
+            border-radius: 20px;
+        }
+
+        .support-card {
+            display: grid;
+            gap: 12px;
+        }
+
+        .support-card h3 {
+            margin: 0 0 6px;
+            font-size: 1rem;
+        }
+
+        .support-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .support-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #FFE6A2;
+            color: #927100;
+        }
+
+        .support-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .support-buttons button {
+            flex: 1;
+            border: 0;
+            border-radius: 16px;
+            padding: 10px;
+            background: #F4F7FB;
+            color: #1F2D3D;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .support-buttons span {
+            width: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .team-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .team-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .team-left .badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #E8F2FF;
+            color: #2D66AA;
+        }
+
+        .team-left .team-text {
+            font-size: .95rem;
+            font-weight: 700;
+        }
+
+        .team-action {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #E8F2FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2D66AA;
+        }
+
+        .invite-card {
+            background: linear-gradient(135deg, #3E79D3, #72A9F7);
+            color: white;
+            border-radius: 20px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: 0 8px 20px rgba(62, 121, 211, .30);
+        }
+
+        .invite-text {
+            display: grid;
+            gap: 8px;
+        }
+
+        .invite-title {
+            font-weight: 700;
+            font-size: .99rem;
+        }
+
+        .referral-link {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            opacity: 0.95;
+            max-width: 220px;
+            word-break: break-all;
+        }
+
+        .referral-stats {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        .copy-btn {
+            border: 0;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            padding: 10px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .invite-cta {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            width: min(90vw, 350px);
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+        }
+
+        .modal h3 {
+            margin: 0 0 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .modal label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .modal select,
+        .modal input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-family: inherit;
+        }
+
+        .modal .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .modal button {
+            flex: 1;
+            padding: 12px;
+            border: 0;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal .btn-primary {
+            background: var(--blue);
+            color: white;
+        }
+
+        .modal .btn-secondary {
+            background: #f0f0f0;
+            color: var(--text);
+        }
+
+        /* Settings Modal Styles */
+        .settings-modal {
+            padding: 20px;
+            max-width: 320px;
+        }
+
+        .settings-card {
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 10px 0;
+        }
+
+        .settings-card .item {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .settings-card .item:hover {
+            background: #f0f0f0;
+        }
+
+        .settings-card .icon {
+            font-size: 24px;
+            color: #000;
+            margin-right: 16px;
+        }
+
+        .settings-card .text {
+            font-size: 18px;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .settings-card .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 0 20px;
+        }
+
+        /* Setup Login Modal Styles */
+        .setup-login-modal {
+            padding: 0;
+            max-width: 360px;
+            background: #f4f6fb;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .setup-login-content {
+            padding: 20px;
+        }
+
+        .setup-login-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .setup-login-back {
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+            transition: 0.2s;
+        }
+
+        .setup-login-back:hover {
+            opacity: 0.7;
+        }
+
+        .setup-login-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e2a3a;
+        }
+
+        .setup-login-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .setup-login-card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #555;
+        }
+
+        .setup-login-card-top i {
+            color: orange;
+        }
+
+        .setup-login-social-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .setup-login-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .setup-login-btn:hover {
+            opacity: 0.9;
+        }
+
+        .setup-login-whatsapp {
+            background: #e9f7ef;
+            color: #25D366;
+        }
+
+        .setup-login-telegram {
+            background: #e8f1fb;
+            color: #0088cc;
+        }
+
+        .setup-login-input-box {
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .setup-login-input-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+            color: #333;
+            background: transparent;
+        }
+
+        .setup-login-input-box i {
+            color: #7a8ca5;
+        }
+
+        .setup-login-eye {
+            margin-left: auto;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .setup-login-eye:hover {
+            opacity: 0.7;
+        }
+
+        .setup-login-submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(90deg, #7a8cfb, #4a6cf7);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .setup-login-submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Withdrawal Modal Styles */
+        .withdrawal-modal {
+            padding: 0;
+            max-width: 360px;
+            background: var(--bg);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .withdrawal-header {
+            background: linear-gradient(135deg, var(--blue), var(--light-blue));
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        .withdrawal-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .withdrawal-back-btn {
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .withdrawal-back-btn:hover {
+            opacity: 0.8;
+        }
+
+        .withdrawal-header-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .withdrawal-close-btn {
+            font-size: 24px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .withdrawal-close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .withdrawal-content {
+            padding: 20px;
+        }
+
+        .withdrawal-balance {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .withdrawal-balance-label {
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .withdrawal-balance-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .withdrawal-amount-section {
+            margin-bottom: 20px;
+        }
+
+        .withdrawal-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .withdrawal-input-wrapper {
+            display: flex;
+            align-items: center;
+            background: var(--card);
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 12px 15px;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .withdrawal-input-wrapper:focus-within {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .withdrawal-currency {
+            color: var(--muted);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .withdrawal-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 16px;
+            color: var(--text);
+            background: transparent;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .withdrawal-input::placeholder {
+            color: var(--muted);
+        }
+
+        .withdrawal-button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(90deg, var(--blue), var(--light-blue));
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .withdrawal-button:hover {
+            opacity: 0.95;
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .withdrawal-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .withdrawal-message {
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .withdrawal-message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #81c784;
+            display: block;
+        }
+
+        .withdrawal-message.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef5350;
+            display: block;
+        }
+
+        /* Withdrawal History Styles */
+        .withdrawal-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid #e0e0e0;
+            margin: 0 -20px 20px -20px;
+            padding: 0 20px;
+        }
+
+        .withdrawal-tab {
+            flex: 1;
+            padding: 14px 0;
+            border: none;
+            background: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--muted);
+            border-bottom: 3px solid transparent;
+            transition: 0.2s;
+        }
+
+        .withdrawal-tab.active {
+            color: var(--blue);
+            border-bottom-color: var(--blue);
+        }
+
+        .withdrawal-tab:hover {
+            color: var(--text);
+        }
+
+        .withdrawal-tab-content {
+            display: none;
+        }
+
+        .withdrawal-tab-content.active {
+            display: block;
+        }
+
+        .withdrawal-history-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .withdrawal-history-item {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        .withdrawal-history-item:hover {
+            box-shadow: var(--shadow);
+        }
+
+        .withdrawal-history-item.pending {
+            border-left-color: #ff9800;
+            background: #fff8f0;
+        }
+
+        .withdrawal-history-item.successful {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .withdrawal-history-left {
+            flex: 1;
+        }
+
+        .withdrawal-history-amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .withdrawal-history-time {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .withdrawal-history-status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .withdrawal-history-status.pending {
+            background: #ffe0b2;
+            color: #e65100;
+        }
+
+        .withdrawal-history-status.successful {
+            background: #c8e6c9;
+            color: #1b5e20;
+        }
+
+        .withdrawal-empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--muted);
+        }
+
+        .withdrawal-empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .withdrawal-empty-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="app-frame">
+        <section class="top-row">
+            <div class="logo">TASK-01</div>
+            <div class="ID">
+                <div class="id-container">
+                    <small>ID</small>
+                    <span id="current-user-id">Not logged in</span>
+                </div>
+                <div class="settings" id="settings-icon" title="Settings">⚙️</div>
+            </div>
+        </section>
+
+        <section class="card balance-card">
+            <div class="balance-top">
+                <div class="icon">🪙</div>
+                <div class="label">Account Balance</div>
+            </div>
+            <div class="balance-value">512.800 NGN</div>
+            <button class="withdraw-btn">
+                Withdrawal <span>›</span>
+            </button>
+
+            <div class="bank-status" id="bank-status" style="cursor: pointer;">
+                <div class="bank-status-left">
+                    <div class="icon">💳</div>
+                    <div class="bank-status-text" id="bank-text">Bank card added</div>
+                    <div class="icon" id="check-icon">✅</div>
+                </div>
+                <div class="info-arrow">›</div>
+            </div>
+        </section>
+
+        <section class="card support-card">
+            <div class="support-top">
+                <div class="support-icon">🔔</div>
+                <div>Help & Support Center</div>
+            </div>
+            <div class="support-buttons">
+                <button title="WhatsApp">
+                    <span>🟢</span> WhatsApp
+                </button>
+                <button title="Telegram">
+                    <span>🔵</span> Telegram
+                </button>
+            </div>
+        </section>
+
+        <section class="card team-card" id="my-team-card" style="cursor:pointer;">
+            <div class="team-left">
+                <div class="badge">👥</div>
+                <div class="team-text">My Team</div>
+            </div>
+            <div class="team-action">›</div>
+        </section>
+
+        <section class="card team-card" id="task-card" style="cursor:pointer;">
+            <div class="team-left">
+                <div class="badge">📋</div>
+                <div class="team-text">Tasks</div>
+            </div>
+            <div class="team-action">›</div>
+        </section>
+
+        <section class="invite-card">
+            <div class="invite-text">
+                <div class="invite-title">Invite friends and earn money</div>
+                <div class="referral-link" id="referral-link">Your referral link will appear here after login.</div>
+                <div class="referral-stats" id="referral-stats"></div>
+            </div>
+            <button class="copy-btn" id="copy-referral-button" type="button">Copy</button>
+        </section>
+    </main>
+
+    <div class="modal-backdrop" id="bank-modal">
+        <div class="modal">
+            <h3>Bind Bank Card</h3>
+            <label for="bank-select">Select Bank</label>
+            <select id="bank-select">
+                <option value="">Choose a provider</option>
+                <option value="Opay">Opay</option>
+                <option value="PalmPay">PalmPay</option>
+            </select>
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+            <label for="card-name">Cardholder Name</label>
+            <input type="text" id="card-name" placeholder="John Doe">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter password">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="08012345678">
+            <div class="btn-row">
+                <button class="btn-secondary" id="cancel-bind">Cancel</button>
+                <button class="btn-primary" id="save-bind">Save Card</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-backdrop" id="settings-modal">
+        <div class="modal settings-modal">
+            <div class="settings-card">
+                <!-- Set up login -->
+                <div class="item" id="setupLogin">
+                    <i class="fas fa-shield-alt icon"></i>
+                    <span class="text">Set up login</span>
+                </div>
+
+                <!-- Admin Message -->
+                <div class="item" id="adminMessage">
+                    <i class="fas fa-bullhorn icon"></i>
+                    <span class="text">Admin Message</span>
+                </div>
+
+                <!-- Divider -->
+                <div class="divider"></div>
+
+                <!-- Log Out -->
+                <div class="item" id="logout">
+                    <i class="fas fa-sign-out-alt icon"></i>
+                    <span class="text">Log Out</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Setup Login Modal -->
+    <div class="modal-backdrop" id="setup-login-modal">
+        <div class="modal setup-login-modal">
+            <div class="setup-login-content">
+                <!-- Header -->
+                <div class="setup-login-header">
+                    <i class="fa fa-arrow-left setup-login-back" id="setup-login-back"></i>
+                    <div class="setup-login-title">Set up login</div>
+                </div>
+
+                <!-- Card -->
+                <div class="setup-login-card">
+                    <div class="setup-login-card-top">
+                        <i class="fa fa-question-circle"></i>
+                        <span>Forgot password</span>
+                    </div>
+
+                    <div class="setup-login-social-buttons">
+                        <button class="setup-login-btn setup-login-whatsapp" id="setup-whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+
+                        <button class="setup-login-btn setup-login-telegram" id="setup-telegram-btn">
+                            <i class="fab fa-telegram-plane"></i> Telegram
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Inputs -->
+                <div class="setup-login-input-box">
+                    <input type="password" placeholder="Enter your Original password" id="original-password">
+                </div>
+
+                <div class="setup-login-input-box">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" placeholder="Enter your password" id="new-password">
+                    <i class="fa fa-eye setup-login-eye" id="toggle-password"></i>
+                </div>
+
+                <div class="setup-login-input-box">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" placeholder="Confirm your password" id="confirm-password">
+                    <i class="fa fa-eye setup-login-eye" id="toggle-confirm-password"></i>
+                </div>
+
+                <!-- Button -->
+                <button class="setup-login-submit-btn" id="reset-password-btn">Reset password</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdrawal Modal -->
+    <div class="modal-backdrop" id="withdrawal-modal">
+        <div class="modal withdrawal-modal">
+            <div class="withdrawal-header">
+                <div class="withdrawal-header-left">
+                    <i class="fa fa-arrow-left withdrawal-back-btn" id="withdrawal-back"></i>
+                    <div class="withdrawal-header-title">Withdrawal</div>
+                </div>
+                <button class="withdrawal-close-btn" id="withdrawal-close-btn">&times;</button>
+            </div>
+            <div class="withdrawal-content">
+                <!-- Tabs -->
+                <div class="withdrawal-tabs">
+                    <button class="withdrawal-tab active" id="withdrawal-form-tab">New Withdrawal</button>
+                    <button class="withdrawal-tab" id="withdrawal-history-tab">History</button>
+                </div>
+
+                <!-- Form Tab Content -->
+                <div class="withdrawal-tab-content active" id="withdrawal-form-content">
+                    <!-- Current Balance -->
+                    <div class="withdrawal-balance">
+                        <div class="withdrawal-balance-label">Available Balance</div>
+                        <div class="withdrawal-balance-value" id="withdrawal-current-balance">512.800 NGN</div>
+                    </div>
+
+                    <!-- Amount Input -->
+                    <div class="withdrawal-amount-section">
+                        <label class="withdrawal-label">Withdrawal Amount</label>
+                        <div class="withdrawal-input-wrapper">
+                            <span class="withdrawal-currency">₦</span>
+                            <input type="number" class="withdrawal-input" id="withdrawal-amount"
+                                placeholder="Enter amount" step="0.01" min="0">
+                        </div>
+                    </div>
+
+                    <!-- Message -->
+                    <div class="withdrawal-message" id="withdrawal-message"></div>
+
+                    <!-- Submit Button -->
+                    <button class="withdrawal-button" id="withdrawal-submit-btn">Complete Withdrawal</button>
+                </div>
+
+                <!-- History Tab Content -->
+                <div class="withdrawal-tab-content" id="withdrawal-history-content">
+                    <div class="withdrawal-history-list" id="withdrawal-history-list">
+                        <div class="withdrawal-empty-state">
+                            <div class="withdrawal-empty-icon">📋</div>
+                            <div class="withdrawal-empty-text">No withdrawal history yet</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            window.location.href = '/signup';
+        }
+
+        function getAuthHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+        }
+
+        let currentUser = null;
+
+        const bankStatus = document.getElementById('bank-status');
+        const bankText = document.getElementById('bank-text');
+        const checkIcon = document.getElementById('check-icon');
+        const modal = document.getElementById('bank-modal');
+        const bankSelect = document.getElementById('bank-select');
+        const cardNumber = document.getElementById('card-number');
+        const cardName = document.getElementById('card-name');
+        const password = document.getElementById('password');
+        const phone = document.getElementById('phone');
+        const cancelBtn = document.getElementById('cancel-bind');
+        const saveBtn = document.getElementById('save-bind');
+
+        let boundCard = JSON.parse(localStorage.getItem('boundCard')) || null;
+
+        function updateBankDisplay() {
+            if (boundCard) {
+                bankText.textContent = `${boundCard.bank} ****${boundCard.cardNumber.slice(-4)}`;
+                checkIcon.textContent = '✅';
+            } else {
+                bankText.textContent = 'No bank linked';
+                checkIcon.textContent = '';
+            }
+        }
+
+        function openModal() {
+            if (boundCard) {
+                bankSelect.value = boundCard.bank;
+                cardNumber.value = boundCard.cardNumber;
+                cardName.value = boundCard.cardName;
+                password.value = boundCard.password;
+                phone.value = boundCard.phone;
+            } else {
+                bankSelect.value = '';
+                cardNumber.value = '';
+                cardName.value = '';
+                password.value = '';
+                phone.value = '';
+            }
+            modal.classList.add('open');
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+        }
+
+        function saveCard() {
+            const bank = bankSelect.value;
+            const number = cardNumber.value.replace(/\s/g, '');
+            const name = cardName.value;
+            const pass = password.value;
+            const ph = phone.value;
+
+            if (!bank || !number || !name || !pass || !ph) {
+                alert('Please fill all fields.');
+                return;
+            }
+
+            if (number.length !== 10) {
+                alert('Card number must be exactly 10 digits.');
+                return;
+            }
+
+            boundCard = { bank, cardNumber: number, cardName: name, password: pass, phone: ph };
+            localStorage.setItem('boundCard', JSON.stringify(boundCard));
+            updateBankDisplay();
+            closeModal();
+            alert('Card bound successfully!');
+        }
+
+        bankStatus.addEventListener('click', openModal);
+        cancelBtn.addEventListener('click', closeModal);
+        saveBtn.addEventListener('click', saveCard);
+
+        const myTeamCard = document.getElementById('my-team-card');
+        if (myTeamCard) {
+            myTeamCard.addEventListener('click', () => {
+                window.location.href = 'team.html';
+            });
+        }
+
+        const taskCard = document.getElementById('task-card');
+        if (taskCard) {
+            taskCard.addEventListener('click', () => {
+                window.location.href = 'tasks.html';
+            });
+        }
+
+        // Settings Modal
+        const settingsModal = document.getElementById('settings-modal');
+        const settingsIcon = document.getElementById('settings-icon');
+        const setupLoginBtn = document.getElementById('setupLogin');
+        const logoutBtn = document.getElementById('logout');
+
+        function openSettingsModal() {
+            settingsModal.classList.add('open');
+        }
+
+        function closeSettingsModal() {
+            settingsModal.classList.remove('open');
+        }
+
+        // Open settings modal when settings icon is clicked
+        settingsIcon.addEventListener('click', openSettingsModal);
+
+        // Close modal when clicking outside
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                closeSettingsModal();
+            }
+        });
+
+        // Settings actions
+        setupLoginBtn.addEventListener('click', () => {
+            closeSettingsModal();
+            openSetupLoginModal();
+        });
+
+        const adminMessageBtn = document.getElementById('adminMessage');
+        adminMessageBtn.addEventListener('click', () => {
+            alert('Admin: Drop info to your users here. (Feature coming soon)');
+            closeSettingsModal();
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            closeSettingsModal();
+            // Clear auth session
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('currentUserPhone');
+            localStorage.removeItem('currentUserName');
+            localStorage.removeItem('currentUserTeamId');
+            localStorage.removeItem('currentUserId');
+            localStorage.removeItem('currentUserReferral');
+            window.location.href = '/login';
+        });
+
+        // Setup Login Modal
+        const setupLoginModal = document.getElementById('setup-login-modal');
+        const setupLoginBackBtn = document.getElementById('setup-login-back');
+        const originalPasswordInput = document.getElementById('original-password');
+        const newPasswordInput = document.getElementById('new-password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const togglePasswordBtn = document.getElementById('toggle-password');
+        const toggleConfirmPasswordBtn = document.getElementById('toggle-confirm-password');
+        const resetPasswordBtn = document.getElementById('reset-password-btn');
+        const setupWhatsappBtn = document.getElementById('setup-whatsapp-btn');
+        const setupTelegramBtn = document.getElementById('setup-telegram-btn');
+
+        function openSetupLoginModal() {
+            setupLoginModal.classList.add('open');
+        }
+
+        function closeSetupLoginModal() {
+            setupLoginModal.classList.remove('open');
+            // Reset form
+            originalPasswordInput.value = '';
+            newPasswordInput.value = '';
+            confirmPasswordInput.value = '';
+            newPasswordInput.type = 'password';
+            confirmPasswordInput.type = 'password';
+        }
+
+        // Back button
+        setupLoginBackBtn.addEventListener('click', () => {
+            closeSetupLoginModal();
+            openSettingsModal();
+        });
+
+        // Close modal when clicking outside
+        setupLoginModal.addEventListener('click', (e) => {
+            if (e.target === setupLoginModal) {
+                closeSetupLoginModal();
+            }
+        });
+
+        // Toggle password visibility
+        togglePasswordBtn.addEventListener('click', () => {
+            if (newPasswordInput.type === 'password') {
+                newPasswordInput.type = 'text';
+                togglePasswordBtn.classList.remove('fa-eye');
+                togglePasswordBtn.classList.add('fa-eye-slash');
+            } else {
+                newPasswordInput.type = 'password';
+                togglePasswordBtn.classList.remove('fa-eye-slash');
+                togglePasswordBtn.classList.add('fa-eye');
+            }
+        });
+
+        // Toggle confirm password visibility
+        toggleConfirmPasswordBtn.addEventListener('click', () => {
+            if (confirmPasswordInput.type === 'password') {
+                confirmPasswordInput.type = 'text';
+                toggleConfirmPasswordBtn.classList.remove('fa-eye');
+                toggleConfirmPasswordBtn.classList.add('fa-eye-slash');
+            } else {
+                confirmPasswordInput.type = 'password';
+                toggleConfirmPasswordBtn.classList.remove('fa-eye-slash');
+                toggleConfirmPasswordBtn.classList.add('fa-eye');
+            }
+        });
+
+        // Reset password button
+        resetPasswordBtn.addEventListener('click', () => {
+            const originalPass = originalPasswordInput.value.trim();
+            const newPass = newPasswordInput.value.trim();
+            const confirmPass = confirmPasswordInput.value.trim();
+
+            if (!originalPass || !newPass || !confirmPass) {
+                alert('Please fill all password fields');
+                return;
+            }
+
+            if (newPass !== confirmPass) {
+                alert('New passwords do not match');
+                return;
+            }
+
+            if (newPass.length < 6) {
+                alert('Password must be at least 6 characters');
+                return;
+            }
+
+            // Save the new password
+            localStorage.setItem('userPassword', newPass);
+            alert('Password reset successfully!');
+            closeSetupLoginModal();
+            openSettingsModal();
+        }); // Social buttons
+        setupWhatsappBtn.addEventListener('click', () => {
+            alert('WhatsApp support will open');
+            // You can integrate WhatsApp link here
+        });
+
+        setupTelegramBtn.addEventListener('click', () => {
+            window.open('https://t.me/+eA9Fe0KEfuQ1NTU0', '_blank');
+        });
+
+        // Support buttons
+        const supportButtons = document.querySelectorAll('.support-buttons button');
+        supportButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.title === 'WhatsApp') {
+                    alert('WhatsApp support will open');
+                    // You can integrate WhatsApp link here
+                } else if (button.title === 'Telegram') {
+                    window.open('https://t.me/+eA9Fe0KEfuQ1NTU0', '_blank');
+                }
+            });
+        });
+
+        // Format card number
+        cardNumber.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+            e.target.value = value;
+        });
+
+        // Withdrawal Modal
+        const withdrawalModal = document.getElementById('withdrawal-modal');
+        const withdrawalBtn = document.querySelector('.withdraw-btn');
+        const withdrawalBackBtn = document.getElementById('withdrawal-back');
+        const withdrawalCloseBtn = document.getElementById('withdrawal-close-btn');
+        const withdrawalAmountInput = document.getElementById('withdrawal-amount');
+        const withdrawalSubmitBtn = document.getElementById('withdrawal-submit-btn');
+        const withdrawalMessage = document.getElementById('withdrawal-message');
+        const withdrawalCurrentBalance = document.getElementById('withdrawal-current-balance');
+        const balanceValueElement = document.querySelector('.balance-value');
+
+        let currentBalance = 0;
+        updateBalanceDisplay();
+
+        async function fetchUserBalance() {
+            try {
+                const response = await fetch('/api/user', {
+                    headers: getAuthHeaders()
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+                const data = await response.json();
+                currentUser = data.user;
+                currentBalance = currentUser.balance || 0;
+                updateBalanceDisplay();
+            } catch (error) {
+                console.error('Error fetching user balance:', error);
+            }
+        }
+
+        fetchUserBalance();
+
+        function openWithdrawalModal() {
+            withdrawalModal.classList.add('open');
+            withdrawalAmountInput.value = '';
+            withdrawalMessage.textContent = '';
+            withdrawalMessage.className = 'withdrawal-message';
+        }
+
+        function closeWithdrawalModal() {
+            withdrawalModal.classList.remove('open');
+            withdrawalAmountInput.value = '';
+            withdrawalMessage.textContent = '';
+            withdrawalMessage.className = 'withdrawal-message';
+        }
+
+        function updateBalanceDisplay() {
+            const balanceText = currentBalance.toFixed(2) + ' NGN';
+            balanceValueElement.textContent = balanceText;
+            withdrawalCurrentBalance.textContent = balanceText;
+        }
+
+        // Withdrawal History
+        const withdrawalFormTab = document.getElementById('withdrawal-form-tab');
+        const withdrawalHistoryTab = document.getElementById('withdrawal-history-tab');
+        const withdrawalFormContent = document.getElementById('withdrawal-form-content');
+        const withdrawalHistoryContent = document.getElementById('withdrawal-history-content');
+        const withdrawalHistoryList = document.getElementById('withdrawal-history-list');
+
+        let withdrawalHistory = JSON.parse(localStorage.getItem('withdrawalHistory')) || [];
+
+        function switchTab(tab) {
+            if (tab === 'form') {
+                withdrawalFormTab.classList.add('active');
+                withdrawalHistoryTab.classList.remove('active');
+                withdrawalFormContent.classList.add('active');
+                withdrawalHistoryContent.classList.remove('active');
+            } else {
+                withdrawalFormTab.classList.remove('active');
+                withdrawalHistoryTab.classList.add('active');
+                withdrawalFormContent.classList.remove('active');
+                withdrawalHistoryContent.classList.add('active');
+                refreshHistoryDisplay();
+            }
+        }
+
+        function formatTime(date) {
+            const d = new Date(date);
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const month = months[d.getMonth()];
+            const day = d.getDate();
+            const hours = String(d.getHours()).padStart(2, '0');
+            const minutes = String(d.getMinutes()).padStart(2, '0');
+            return `${month} ${day}, ${hours}:${minutes}`;
+        }
+
+        function addToHistory(amount, status = 'pending') {
+            const historyItem = {
+                amount: amount,
+                status: status,
+                timestamp: new Date().toISOString(),
+                id: Date.now()
+            };
+            withdrawalHistory.unshift(historyItem);
+            localStorage.setItem('withdrawalHistory', JSON.stringify(withdrawalHistory));
+            return historyItem;
+        }
+
+        function updateHistoryStatus(id, newStatus) {
+            const item = withdrawalHistory.find(h => h.id === id);
+            if (item) {
+                item.status = newStatus;
+                localStorage.setItem('withdrawalHistory', JSON.stringify(withdrawalHistory));
+            }
+        }
+
+        function refreshHistoryDisplay() {
+            if (withdrawalHistory.length === 0) {
+                withdrawalHistoryList.innerHTML = `
+                    <div class="withdrawal-empty-state">
+                        <div class="withdrawal-empty-icon">📋</div>
+                        <div class="withdrawal-empty-text">No withdrawal history yet</div>
+                    </div>
+                    `;
+                return;
+            }
+
+            withdrawalHistoryList.innerHTML = withdrawalHistory.map(item => `
+                    <div class="withdrawal-history-item ${item.status}">
+                        <div class="withdrawal-history-left">
+                            <div class="withdrawal-history-amount">₦${item.amount.toFixed(2)}</div>
+                            <div class="withdrawal-history-time">${formatTime(item.timestamp)}</div>
+                        </div>
+                        <div class="withdrawal-history-status ${item.status}">
+                            ${item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                        </div>
+                    </div>
+                    `).join('');
+        }
+
+        // Tab switching
+        withdrawalFormTab.addEventListener('click', () => switchTab('form'));
+        withdrawalHistoryTab.addEventListener('click', () => switchTab('history'));
+
+        // Open withdrawal modal
+        if (withdrawalBtn) {
+            withdrawalBtn.addEventListener('click', openWithdrawalModal);
+        }
+
+        // Back button
+        withdrawalBackBtn.addEventListener('click', closeWithdrawalModal);
+
+        // Close button
+        withdrawalCloseBtn.addEventListener('click', closeWithdrawalModal);
+
+        // Close modal when clicking outside
+        withdrawalModal.addEventListener('click', (e) => {
+            if (e.target === withdrawalModal) {
+                closeWithdrawalModal();
+            }
+        });
+
+        // Submit withdrawal
+        withdrawalSubmitBtn.addEventListener('click', async () => {
+            const amount = parseFloat(withdrawalAmountInput.value);
+            withdrawalMessage.textContent = '';
+            withdrawalMessage.className = 'withdrawal-message';
+
+            // Validation
+            if (!withdrawalAmountInput.value) {
+                withdrawalMessage.textContent = 'Please enter an amount';
+                withdrawalMessage.classList.add('error');
+                return;
+            }
+
+            if (isNaN(amount) || amount <= 0) {
+                withdrawalMessage.textContent = 'Please enter a valid amount';
+                withdrawalMessage.classList.add('error');
+                return;
+            }
+            if (amount > currentBalance) {
+                withdrawalMessage.textContent = `Insufficient balance. Available: ₦${currentBalance.toFixed(2)}`;
+                withdrawalMessage.classList.add('error');
+                return;
+            }
+
+            // Add to history as pending
+            const historyRecord = addToHistory(amount, 'pending');
+
+            // Process withdrawal
+            withdrawalSubmitBtn.disabled = true;
+            withdrawalSubmitBtn.textContent = 'Processing...';
+
+            try {
+                const response = await fetch('/withdraw', {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ amount })
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'Withdrawal failed');
+                }
+
+                currentBalance = data.balance;
+
+                // Update history status to successful
+                updateHistoryStatus(historyRecord.id, 'successful');
+
+                // Update display
+                updateBalanceDisplay();
+
+                // Show success message
+                withdrawalMessage.textContent = `Successfully withdrawn ₦${amount.toFixed(2)}. New balance: ₦${currentBalance.toFixed(2)}`;
+                withdrawalMessage.classList.add('success');
+
+                // Reset form after 2 seconds
+                setTimeout(() => {
+                    closeWithdrawalModal();
+                }, 2000);
+
+            } catch (error) {
+                console.error('Withdrawal error:', error);
+                updateHistoryStatus(historyRecord.id, 'failed');
+                withdrawalMessage.textContent = 'An error occurred. Please try again.';
+                withdrawalMessage.classList.add('error');
+            } finally {
+                withdrawalSubmitBtn.disabled = false;
+                withdrawalSubmitBtn.textContent = 'Complete Withdrawal';
+            }
+        });
+
+        // Allow Enter key to submit
+        withdrawalAmountInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                withdrawalSubmitBtn.click();
+            }
+        });
+
+        // Display current user ID and referral data
+        const currentUserIdElement = document.getElementById('current-user-id');
+        const referralLinkElement = document.getElementById('referral-link');
+        const copyReferralButton = document.getElementById('copy-referral-button');
+        const referralStatsElement = document.getElementById('referral-stats');
+
+        async function loadUserDetails() {
+            try {
+                const response = await fetch('/api/user', {
+                    headers: getAuthHeaders()
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user details');
+                }
+                const data = await response.json();
+                const user = data.user;
+
+                // Display user ID
+                if (currentUserIdElement) {
+                    const displayId = user.userId ? user.userId.substring(0, 12) + (user.userId.length > 12 ? '...' : '') : 'Not logged in';
+                    currentUserIdElement.textContent = displayId;
+                    if (user.userId) {
+                        currentUserIdElement.title = user.userId;
+                    }
+                }
+
+                // Fetch and display referral data
+                const referralResponse = await fetch('/api/referrals', {
+                    headers: getAuthHeaders()
+                });
+                if (referralResponse.ok) {
+                    const referralData = await referralResponse.json();
+                    const referralCode = referralData.referralCode;
+                    const referralUrl = `${window.location.origin}/signup?ref=${referralCode}`;
+
+                    if (referralLinkElement) {
+                        referralLinkElement.textContent = referralUrl;
+                    }
+
+                    if (referralStatsElement) {
+                        referralStatsElement.textContent = `Referrals: ${referralData.referralCount} | Earnings: ₦${referralData.referralEarnings}`;
+                    }
+
+                    if (copyReferralButton) {
+                        copyReferralButton.addEventListener('click', () => {
+                            navigator.clipboard.writeText(referralUrl).then(() => {
+                                copyReferralButton.textContent = 'Copied!';
+                                setTimeout(() => {
+                                    copyReferralButton.textContent = 'Copy';
+                                }, 1500);
+                            }).catch(() => {
+                                prompt('Copy your referral link:', referralUrl);
+                            });
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user details:', error);
+            }
+        }
+
+        loadUserDetails();
+
+        updateBankDisplay();
+
+        if (copyReferralButton) {
+            copyReferralButton.addEventListener('click', () => {
+                if (!referralUrl) {
+                    alert('Log in first to get your referral link.');
+                    return;
+                }
+                navigator.clipboard.writeText(referralUrl).then(() => {
+                    copyReferralButton.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyReferralButton.textContent = 'Copy';
+                    }, 1500);
+                }).catch(() => {
+                    prompt('Copy your referral link:', referralUrl);
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
